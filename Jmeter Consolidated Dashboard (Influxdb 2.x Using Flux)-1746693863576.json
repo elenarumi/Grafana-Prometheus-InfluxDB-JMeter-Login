@@ -1,0 +1,3157 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "enable": true,
+        "hide": false,
+        "iconColor": "blue",
+        "name": "Test Started",
+        "target": {
+          "query": "from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"events\")\r\n  |> filter(fn: (r) => r[\"_value\"] =~ /.* started/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "Anno"
+        }
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "enable": true,
+        "hide": false,
+        "iconColor": "blue",
+        "name": "Test Ended",
+        "target": {
+          "query": "from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"events\")\r\n  |> filter(fn: (r) => r[\"_value\"] =~ /.* ended/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "Anno"
+        }
+      }
+    ]
+  },
+  "description": "JMeter performance testing live results dashboard, utilizing Flux queries (Influxdb 2.x)",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 31,
+      "panels": [],
+      "title": "Summary",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"minAT\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Minimum Users",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 1
+      },
+      "id": 56,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"maxAT\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Maximum Users",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "query": "started_count_last=from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"startedT\")\n\nended_count_last=from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"endedT\")\n  \nactive_count = join(tables:{started_count_last:started_count_last, ended_count_last:ended_count_last}, on:[\"_time\"])\n|> map(fn:(r) => ({\n_value: r._value_started_count_last- r._value_ended_count_last}))\n  |> yield(name: \"active_count\")  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Active Users",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 9,
+        "y": 1
+      },
+      "id": 62,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> cumulativeSum() \n",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Total Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 14,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] == \"countError\")\n  |> cumulativeSum() ",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Failed Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "0"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 18,
+        "y": 1
+      },
+      "id": 75,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "successPercentage = () => {\n\nallCount=from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"application\"])\n  |> sum()\n  |> keep(columns: [\"_value\", \"application\"])\n  \nokCount=from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"ok\")\n  |> group(columns: [\"application\"])\n  |> sum()\n  |> keep(columns: [\"_value\", \"application\"])\n  \n  return join(\n      tables:{allCount:allCount, okCount:okCount},\n      on:[\"application\"]\n    )\n    |> map(fn:(r) => ({\n             \n             percentage: r._value_okCount / r._value_allCount         \n    }))       \n}\n\nsuccessPercentage()",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Success Rate %",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "0"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "id": 74,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] =~ /count*/)\n  |> sum()\n  |> pivot(rowKey:[\"_measurement\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({_value: float(v: r.countError) / float(v: r.count) * 100.0}))",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Failure Rate %",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"_field\"] == \"min\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Minimum Response Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "thresholds"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red"
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 6
+      },
+      "id": 58,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"_field\"] == \"max\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Maximum Response Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 6
+      },
+      "id": 60,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"rb\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> sum()",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Total Received Bytes",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 12,
+        "y": 6
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"_field\"] == \"sb\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> sum()",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Total Sent Bytes",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "id": 17,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => exists r[\"responseCode\"])\n  |> group(columns: [\"responseCode\"], mode:\"by\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> count()",
+          "refId": "A"
+        }
+      ],
+      "title": "Errors By Status Codes",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": ".*responseCode=\"([^\"]*).*",
+            "renamePattern": "Error $1"
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "eel5imfmfso3kf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# Samples"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "noValue",
+                "value": "-"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transaction"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "auto"
+              },
+              {
+                "id": "displayName",
+                "value": "Transactions"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 77,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 12,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"count\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> sum()\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"# Samples\"})",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"avg\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\n  |> keep(columns: [\"_value\", \"transaction\"])\n  |> group(columns: [\"transaction\"])\n  |> last()\n  |> group()\n  |> rename(columns: {\"_value\": \"Avg\"})",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": true,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"pct50.0\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> median()\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"Median RT\"})",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"min\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> min()\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"Min\"})",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"max\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> max()\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"Max\"})",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"pct95.0\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> quantile(q: 0.95, method: \"exact_mean\")\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"95%\"})",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"pct99.0\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n  |> group(columns: [\"transaction\"])\r\n  |> quantile(q: 0.99, method: \"exact_mean\")\r\n  |> group()\r\n  |> rename(columns: {\"_value\": \"99%\"})",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "hide": false,
+          "query": "countAll = from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"count\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> group(columns: [\"transaction\"])\r\n  |> sum()\r\n  |> group()\r\n  |> toFloat()\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n\r\ncountError = from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"count\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"ko\")\r\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\r\n  |> group(columns: [\"transaction\"])\r\n  |> sum()\r\n  |> group()\r\n  |> toFloat()\r\n  |> keep(columns: [\"_value\", \"transaction\"])\r\n\r\njoin(\r\n      tables:{countAll:countAll, countError:countError},\r\n      on:[\"transaction\"]\r\n    )\r\n    |> map(fn:(r) => ({\r\n             transaction: r.transaction,\r\n             ErrorRate: r._value_countError / r._value_countAll         \r\n}))   ",
+          "refId": "H"
+        }
+      ],
+      "title": "Metrics",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 45,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "red",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 2
+          },
+          "id": 54,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.2.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"ko\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  //|> count()\n  //|> filter(fn: (r) => r[\"_field\"] == \"countError\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Errors By Transaction",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 43,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "Time"
+              }
+            ]
+          },
+          "pluginVersion": "10.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"responseMessage\"] != \"\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+              "refId": "A"
+            }
+          ],
+          "title": "Error Details",
+          "transformations": [
+            {
+              "id": "labelsToFields",
+              "options": {
+                "mode": "columns"
+              }
+            },
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "application": true,
+                  "count": true
+                },
+                "indexByName": {
+                  "Time": 0,
+                  "application": 3,
+                  "count": 2,
+                  "responseCode": 4,
+                  "responseMessage": 5,
+                  "transaction": 1
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Error Details",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 29,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 3
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] == \"avg\")\n  |> group(columns: [\"transaction\"], mode:\"by\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Transactions Response Times ",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "yellow",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 2,
+                "pointSize": 7,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 11
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "min",
+                "max"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"meanAT\")\n",
+              "refId": "A"
+            }
+          ],
+          "title": "Active Threads Over Time",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(.*)",
+                "renamePattern": "Number of Threads"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 11
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> set(key: \"_field\", value: \"Total\")  ",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] =~ /countError/)\n  |> set(key: \"_field\", value: \"Failed\")",
+              "refId": "B"
+            }
+          ],
+          "title": "Total vs Failed Requests Over Time",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(.*){.*}",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "Over Time (Response Times, Metrics, Active Threads, Requests)",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 27,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "left",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 4,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 4,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "reqps"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "C"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "bars"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.showPoints",
+                    "value": "auto"
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 76
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Errors Per Second"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Transations Per Second"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active Threads"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "threads"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"maxAT\")\n  |> keep(columns: [\"_field\", \"_value\", \"_time\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: last, createEmpty: true)\n  |> set(key: \"_field\", value: \"Active Threads\")",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\r\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\r\n  |> keep(columns: [\"_field\", \"_value\", \"_time\"])\r\n  |> aggregateWindow(every: ${send_interval}s, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({ r with _value: float(v: r._value / float(v: ${send_interval}))}))\r\n  |> set(key: \"_field\", value: \"Transations Per Second\")",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"countError\")\r\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\r\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\r\n  |> group(columns: [\"_field\"])\r\n  |> aggregateWindow(every: ${send_interval}s, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({ r with _value: float(v: r._value / float(v: ${send_interval}))}))\r\n  |> set(key: \"_field\", value: \"Errors Per Second\")",
+              "refId": "C"
+            }
+          ],
+          "title": "Total Throughput",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "yellow",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 7,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "binBps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 30
+          },
+          "id": 76,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"${measurement_name}\")\n  |> filter(fn: (r) => r._field == \"sb\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: sum, createEmpty: true)\n  |> map(fn: (r) => ({ r with _value: float(v: r._value / float(v: ${send_interval}))}))\n  |> set(key: \"_field\", value: \"Sent Bytes\")",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\r\n  |> filter(fn: (r) => r._field == \"rb\")\r\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\r\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\r\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\r\n  |> group(columns: [\"_field\"])\r\n  |> aggregateWindow(every: ${send_interval}s, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({ r with _value: float(v: r._value / float(v: ${send_interval}))}))\r\n  |> set(key: \"_field\", value: \"Received Bytes\")",
+              "refId": "B"
+            }
+          ],
+          "title": "Network Traffic",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 4,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 38
+          },
+          "id": 84,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"avg\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"Average(Combined)\")  ",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"pct90.0\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"90th Percentile\")",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"pct95.0\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"95th Percentile\")  ",
+              "refId": "C"
+            }
+          ],
+          "title": "Response time (Average, 90%, 95%)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "reqps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 38
+          },
+          "id": 78,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hit\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"all\")\n  |> aggregateWindow(every: 60s, fn: sum, createEmpty: false)\n  |> map(fn: (r) => ({r with _value: r._value / 60.0}))",
+              "refId": "A"
+            }
+          ],
+          "title": "Hits Per Second",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(.*)",
+                "renamePattern": "Hits"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "reqps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 46
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\n  |> filter(fn: (r) => exists r.statut)\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> aggregateWindow(every: 60s, fn: sum, createEmpty: false)\n  |> map(fn: (r) => ({r with _value: r._value / 60.0}))",
+              "refId": "A"
+            }
+          ],
+          "title": "Transactions Per Second (Individual)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "reqps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 46
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"transaction\"] != \"all\")\n  |> filter(fn: (r) => exists r.statut)\n  |> filter(fn: (r) => r[\"statut\"] == \"ko\" or r[\"statut\"] == \"ok\" )\n  |> drop(columns: [\"transaction\"])\n  |> aggregateWindow(every: 60s, fn: sum, createEmpty: false)\n  |> map(fn: (r) => ({r with _value: r._value / 60.0}))",
+              "refId": "A"
+            }
+          ],
+          "title": "Total Transactions Per Second (By Status)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*statut=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "Throughput (Network Traffic, Hits & Transactions Per Second)",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 38,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "green",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "color": "green",
+                      "index": 0,
+                      "text": "0"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 55
+          },
+          "id": 68,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> cumulativeSum() \n",
+              "refId": "A"
+            }
+          ],
+          "title": "Total Requests - $transaction",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "green",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "color": "green",
+                      "index": 0,
+                      "text": "0"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 55
+          },
+          "id": 57,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"statut\"] == \"ok\")\n  |> cumulativeSum() \n",
+              "refId": "A"
+            }
+          ],
+          "title": "Passed Requests - $transaction",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "red",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "color": "red",
+                      "index": 0,
+                      "text": "0"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 16,
+            "y": 55
+          },
+          "id": 63,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"count\")\n  |> filter(fn: (r) => r[\"statut\"] == \"ko\")\n  |> cumulativeSum() \n",
+              "refId": "A"
+            }
+          ],
+          "title": "Failed Requests - $transaction",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisGridShow": true,
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 62
+          },
+          "id": 41,
+          "options": {
+            "legend": {
+              "calcs": [
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"jmeter\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")  \n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"_field\"] == \"avg\")\n  |> group(columns: [\"transaction\"], mode:\"by\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Average Response Times - $transaction",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "eel5imfmfso3kf"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisLabel": "Response Time",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 4,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 62
+          },
+          "id": 90,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"avg\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"Average\")  ",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"pct90.0\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"90th Percentile\")",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"pct95.0\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"95th Percentile\")  ",
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "eel5imfmfso3kf"
+              },
+              "hide": false,
+              "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"jmeter\")\n  |> filter(fn: (r) => r._field == \"pct99.0\")\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\n  |> filter(fn: (r) => r[\"statut\"] == \"all\")\n  |> filter(fn: (r) => r[\"transaction\"] == \"${transaction}\")\n  |> group(columns: [\"_field\"])\n  |> aggregateWindow(every: ${send_interval}s, fn: mean, createEmpty: true)\n  |> set(key: \"_field\", value: \"99th Percentile\")  ",
+              "refId": "D"
+            }
+          ],
+          "title": "Response time (Average, 90%, 95%, 99%)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": ".*transaction=\"([^\"]*).*",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "repeat": "transaction",
+      "title": "Individual Transaction - ${transaction}",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "refresh": "10s",
+  "schemaVersion": 41,
+  "tags": [
+    "jmeter",
+    "influxdb2.x",
+    "flux"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "influxdb",
+          "value": "eel5imfmfso3kf"
+        },
+        "includeAll": false,
+        "name": "data_source",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "jmeter",
+          "value": "jmeter"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "definition": "buckets()",
+        "includeAll": false,
+        "name": "bucket",
+        "options": [],
+        "query": "buckets()",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "Login",
+          "value": "Login"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "definition": " from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\r\n  |> group()\r\n  |> distinct(column: \"application\") \r\n  |> drop(columns: [\"_start\", \"_stop\"])",
+        "includeAll": false,
+        "name": "application",
+        "options": [],
+        "query": " from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\r\n  |> group()\r\n  |> distinct(column: \"application\") \r\n  |> drop(columns: [\"_start\", \"_stop\"])",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "definition": " from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\r\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\r\n  |> group()\r\n  |> distinct(column: \"transaction\") \r\n  |> drop(columns: [\"_start\", \"_stop\"])\r\n  |> filter(fn: (r) => r[\"_value\"] != \"internal\") ",
+        "includeAll": true,
+        "multi": true,
+        "name": "transaction",
+        "options": [],
+        "query": " from(bucket: \"${bucket}\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"${measurement_name}\")\r\n  |> filter(fn: (r) => r[\"application\"] == \"${application}\")\r\n  |> group()\r\n  |> distinct(column: \"transaction\") \r\n  |> drop(columns: [\"_start\", \"_stop\"])\r\n  |> filter(fn: (r) => r[\"_value\"] != \"internal\") ",
+        "refresh": 1,
+        "regex": "",
+        "sort": 2,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "jmeter",
+          "value": "jmeter"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "eel5imfmfso3kf"
+        },
+        "definition": "import \"influxdata/influxdb/v1\"\nv1.measurements(bucket: v.bucket)",
+        "includeAll": false,
+        "label": "Measurement name",
+        "name": "measurement_name",
+        "options": [],
+        "query": "import \"influxdata/influxdb/v1\"\nv1.measurements(bucket: v.bucket)",
+        "refresh": 2,
+        "regex": "jmeter",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "10",
+          "value": "10"
+        },
+        "hide": 2,
+        "name": "send_interval",
+        "query": "10",
+        "skipUrlSync": true,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Jmeter Consolidated Dashboard (Influxdb 2.x Using Flux)",
+  "uid": "f1de3f2d-c546-1q21-9739-d101411b8b37",
+  "version": 1
+}
